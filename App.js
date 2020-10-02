@@ -2,6 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import CourseList from './components/CourseList';
 
+const termMap = { F: 'Fall', W: 'Winter', S: 'Spring'};
+const terms = Object.values(termMap);
+
+const getCourseTerm = course => (
+  termMap[course.id.charAt(0)]
+);
+
 const App = () => {
   const [schedule, setSchedule] = useState({title: '', courses: []})
 
@@ -24,6 +31,8 @@ const App = () => {
     </SafeAreaView>
   );
 }
+
+
 
 const Banner = ({title}) => (
   <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
