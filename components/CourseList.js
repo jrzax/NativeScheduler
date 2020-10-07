@@ -11,7 +11,7 @@ const getCourseTerm = course => (
   termMap[course.id.charAt(0)]
 );
 
-const CourseList = ({courses}) => {
+const CourseList = ({courses, view}) => {
 
   const [selectedTerm, setSelectedTerm] = useState('Fall');
 
@@ -19,7 +19,7 @@ const CourseList = ({courses}) => {
   return(
     <View>
       <TermSelector selectedTerm={selectedTerm} setSelectedTerm={setSelectedTerm} />
-      <CourseSelector courses={termCourses} />
+      <CourseSelector courses={termCourses} view={view} />
     </View>
   )};
 
