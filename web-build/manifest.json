@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "Scheduler",
-  "short_name": "Scheduler",
+  "name": "CS Course Scheduler",
+  "short_name": "CS Course Scheduler",
   "start_url": "/?utm_source=web_app_manifest",
   "orientation": "portrait",
   "icons": [

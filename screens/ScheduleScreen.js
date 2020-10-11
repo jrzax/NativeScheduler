@@ -3,6 +3,7 @@ import { StyleSheet, Text, ScrollView, SafeAreaView, TouchableOpacity } from 're
 import CourseList from '../components/CourseList';
 import UserContext from '../UserContext';
 import CourseEditScreen from './CourseEditScreen';
+import {firebase} from '../firebase'
 
 
 const termMap = { F: 'Fall', W: 'Winter', S: 'Spring'};
@@ -11,6 +12,11 @@ const terms = Object.values(termMap);
 const getCourseTerm = course => (
   termMap[course.id.charAt(0)]
 );
+
+const fixCourses = json => ({
+  ...json,
+  courses: Object.values(json.courses)
+});
 
 const ScheduleScreen = ({navigation}) => {
   const user = useContext(UserContext);
@@ -24,13 +30,12 @@ const ScheduleScreen = ({navigation}) => {
   const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';
 
   useEffect(() => {
-    const fetchSchedule =  async () => {
-      const response = await fetch(url);
-      if (!response.ok) throw response;
-      const json = await response.json();
-      setSchedule(json);
+    const db = firebase.database().ref();
+    const handleData = snap => {
+      if (snap.val()) setSchedule(fixCourses(snap.val()));
     }
-    fetchSchedule();
+    db.on('value', handleData, error => alert(error));
+    return () => { db.off('value', handleData); };
   }, []);
 
   return (
